@@ -1,35 +1,66 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import HomePage from './pages/HomePage';
+import PlannerPage from './pages/PlannerPage';
+import GeneratedView from './pages/GeneratedView';
+import PlaceDetail from './pages/PlaceDetail';
+import PlanConfirm from './pages/PlanConfirm';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      setCurrentPath(window.location.pathname);
+    };
+
+    window.addEventListener('popstate', handleLocationChange);
+    
+    // Intercept all anchor clicks for local navigation
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest('a');
+      
+      if (anchor && anchor.href.startsWith(window.location.origin)) {
+        const path = anchor.getAttribute('href');
+        if (path && !path.includes('#')) {
+          e.preventDefault();
+          window.history.pushState({}, '', path);
+          setCurrentPath(path);
+        }
+      }
+    };
+
+    document.addEventListener('click', handleAnchorClick);
+
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      document.removeEventListener('click', handleAnchorClick);
+    };
+  }, []);
+
+  const renderPage = () => {
+    switch (currentPath) {
+      case '/':
+        return <HomePage />;
+      case '/planner':
+        return <PlannerPage />;
+      case '/generated':
+        return <GeneratedView />;
+      case '/confirm':
+        return <PlanConfirm />;
+      case '/place-detail':
+        return <PlaceDetail />;
+      default:
+        return <HomePage />;
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="App">
+      {renderPage()}
+    </div>
+  );
 }
 
-export default App
+export default App;
