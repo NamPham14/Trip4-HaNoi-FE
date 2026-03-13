@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
-import { Check, Banknote, Wallet, Gem, Calendar, Heart, ArrowRight, Sparkles } from 'lucide-react';
+import { Check, Banknote, Wallet, Gem, Calendar, Heart, ArrowRight, Sparkles, User, Users, Home, Plus, Minus } from 'lucide-react';
 
 const PlannerPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const totalSteps = 4;
+  const totalSteps = 5;
   const [formData, setFormData] = useState({
     duration: '4h',
     interests: [] as string[],
-    budget: 'Moderate'
+    budget: 'Moderate',
+    peopleCount: 1,
+    travelType: 'Solo'
   });
 
   const handleNext = () => {
@@ -32,6 +34,17 @@ const PlannerPage: React.FC = () => {
       return { ...prev, interests };
     });
   };
+
+  const adjustPeople = (amount: number) => {
+    setFormData(prev => ({ ...prev, peopleCount: Math.max(1, prev.peopleCount + amount) }));
+  };
+
+  const travelTypes = [
+    { id: 'Solo', label: 'Solo', icon: User, defaultCount: 1 },
+    { id: 'Couple', label: 'Couple', icon: Heart, defaultCount: 2 },
+    { id: 'Family', label: 'Family', icon: Home, defaultCount: 3 },
+    { id: 'Group', label: 'Group', icon: Users, defaultCount: 4 },
+  ];
 
   const progress = (currentStep / totalSteps) * 100;
 
@@ -83,6 +96,42 @@ const PlannerPage: React.FC = () => {
             {currentStep === 2 && (
               <div className="step-content">
                 <div className="mb-8">
+                  <h2 className="text-3xl font-bold text-slate-900 mb-2">Who's Traveling?</h2>
+                  <p className="text-slate-500">Select your travel group type and number of people. <br className="hidden md:block" /> Chọn loại hình nhóm du lịch và số lượng người.</p>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                  {travelTypes.map((type) => (
+                    <div key={type.id} className="relative">
+                      <button 
+                        onClick={() => {
+                          updateFormData('travelType', type.id);
+                          updateFormData('peopleCount', type.defaultCount);
+                        }}
+                        className={`w-full flex flex-col items-center justify-center p-4 border-2 rounded-2xl cursor-pointer transition-all ${formData.travelType === type.id ? 'border-hanoi-red bg-hanoi-red/5 text-hanoi-red' : 'border-slate-100 hover:border-hanoi-red/30'}`}
+                      >
+                        <type.icon size={24} className="mb-2" />
+                        <span className="font-bold text-sm">{type.label}</span>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <div className="bg-soft-beige rounded-[2rem] p-8 flex items-center justify-between">
+                  <div>
+                    <h4 className="font-bold text-lg">Total People</h4>
+                    <p className="text-xs text-slate-500 uppercase font-bold tracking-tighter">Số lượng thành viên</p>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <button onClick={() => adjustPeople(-1)} className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center bg-white hover:border-hanoi-red"><Minus size={18} /></button>
+                    <span className="text-2xl font-black w-8 text-center">{formData.peopleCount}</span>
+                    <button onClick={() => adjustPeople(1)} className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center bg-white hover:border-hanoi-red"><Plus size={18} /></button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {currentStep === 3 && (
+              <div className="step-content">
+                <div className="mb-8">
                   <h2 className="text-3xl font-bold text-slate-900 mb-2">What Interests You?</h2>
                   <p className="text-slate-500">Select all that apply to personalize your itinerary. <br className="hidden md:block" /> Chọn các chủ đề bạn quan tâm.</p>
                 </div>
@@ -111,7 +160,7 @@ const PlannerPage: React.FC = () => {
               </div>
             )}
 
-            {currentStep === 3 && (
+            {currentStep === 4 && (
               <div className="step-content">
                 <div className="mb-8">
                   <h2 className="text-3xl font-bold text-slate-900 mb-2">Select Your Budget</h2>
@@ -155,39 +204,48 @@ const PlannerPage: React.FC = () => {
               </div>
             )}
 
-            {currentStep === 4 && (
+            {currentStep === 5 && (
               <div className="step-content">
                 <div className="mb-8">
                   <h2 className="text-3xl font-bold text-slate-900 mb-2">Review & Generate</h2>
                   <p className="text-slate-500">Almost ready! Check your preferences before we generate the magic. <br className="hidden md:block" /> Kiểm tra lại thông tin.</p>
                 </div>
-                <div className="bg-soft-beige rounded-[2rem] p-8 space-y-6">
-                  <div className="flex justify-between items-center pb-6 border-b border-slate-200">
+                <div className="bg-soft-beige rounded-[2rem] p-8 space-y-4">
+                  <div className="flex justify-between items-center pb-4 border-b border-slate-200/50">
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-hanoi-red shadow-sm">
                         <Calendar size={20} />
                       </div>
-                      <span className="font-bold text-slate-600">Duration</span>
+                      <span className="font-bold text-slate-600 text-sm">Duration</span>
                     </div>
-                    <span className="font-black text-slate-900 text-lg">{formData.duration === '4h' ? '4 Hours' : formData.duration.replace('d', ' Day') + (formData.duration === '1d' ? '' : 's')}</span>
+                    <span className="font-black text-slate-900">{formData.duration === '4h' ? '4 Hours' : formData.duration.replace('d', ' Day') + (formData.duration === '1d' ? '' : 's')}</span>
                   </div>
-                  <div className="flex justify-between items-start pb-6 border-b border-slate-200">
+                  <div className="flex justify-between items-center pb-4 border-b border-slate-200/50">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-hanoi-red shadow-sm">
+                        <Users size={20} />
+                      </div>
+                      <span className="font-bold text-slate-600 text-sm">Travelers</span>
+                    </div>
+                    <span className="font-black text-slate-900">{formData.peopleCount} {formData.peopleCount > 1 ? 'People' : 'Person'} ({formData.travelType})</span>
+                  </div>
+                  <div className="flex justify-between items-start pb-4 border-b border-slate-200/50">
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-hanoi-red shadow-sm">
                         <Heart size={20} />
                       </div>
-                      <span className="font-bold text-slate-600">Interests</span>
+                      <span className="font-bold text-slate-600 text-sm">Interests</span>
                     </div>
-                    <span className="font-black text-slate-900 text-lg text-right max-w-[200px]">{formData.interests.length > 0 ? formData.interests.join(', ') : 'General Sightseeing'}</span>
+                    <span className="font-black text-slate-900 text-right max-w-[200px]">{formData.interests.length > 0 ? formData.interests.join(', ') : 'General'}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-hanoi-red shadow-sm">
                         <Banknote size={20} />
                       </div>
-                      <span className="font-bold text-slate-600">Budget</span>
+                      <span className="font-bold text-slate-600 text-sm">Budget</span>
                     </div>
-                    <span className="font-black text-slate-900 text-lg">{formData.budget}</span>
+                    <span className="font-black text-slate-900">{formData.budget}</span>
                   </div>
                 </div>
               </div>

@@ -4,6 +4,9 @@ import PlannerPage from './pages/PlannerPage';
 import GeneratedView from './pages/GeneratedView';
 import PlaceDetail from './pages/PlaceDetail';
 import PlanConfirm from './pages/PlanConfirm';
+import PricingPage from './pages/PricingPage';
+import EventsPage from './pages/EventsPage';
+import BlogPage from './pages/BlogPage';
 import './App.css';
 
 function App() {
@@ -45,6 +48,12 @@ function App() {
         return <HomePage />;
       case '/planner':
         return <PlannerPage />;
+      case '/events':
+        return <EventsPage />;
+      case '/blog':
+        return <BlogPage />;
+      case '/pricing':
+        return <PricingPage />;
       case '/generated':
         return <GeneratedView />;
       case '/confirm':

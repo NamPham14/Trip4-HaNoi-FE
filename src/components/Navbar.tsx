@@ -14,9 +14,10 @@ const Navbar: React.FC = () => {
       </div>
       
       <div className="hidden md:flex items-center gap-8">
-        <a href="#how-it-works" className="font-medium text-slate-600 hover:text-hanoi-red transition-colors">How it works</a>
-        <a href="#discover" className="font-medium text-slate-600 hover:text-hanoi-red transition-colors">Discover</a>
-        <a href="#pricing" className="font-medium text-slate-600 hover:text-hanoi-red transition-colors">Pricing</a>
+        <a href="/" className="font-medium text-slate-600 hover:text-hanoi-red transition-colors">Home</a>
+        <a href="/events" className="font-medium text-slate-600 hover:text-hanoi-red transition-colors">Events</a>
+        <a href="/blog" className="font-medium text-slate-600 hover:text-hanoi-red transition-colors">Blog</a>
+        <a href="/pricing" className="font-medium text-slate-600 hover:text-hanoi-red transition-colors">Pricing</a>
       </div>
 
       <div className="flex items-center gap-4">
