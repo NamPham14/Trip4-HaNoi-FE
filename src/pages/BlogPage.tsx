@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../components/Layout';
-import { ArrowRight, User, Calendar, BookOpen } from 'lucide-react';
+import { ArrowRight, User, Calendar } from 'lucide-react';
 
 const BlogPage: React.FC = () => {
   const posts = [
@@ -9,7 +9,7 @@ const BlogPage: React.FC = () => {
       title: 'The Secret Coffee Shops of the Old Quarter',
       author: 'Nguyen Minh',
       date: 'Oct 20, 2023',
-      image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80',
+      image: 'https://evivatour.com/wp-content/uploads/2024/07/12-Hanoi-Vintage-Cafes-Ancient-House-Classic-Decor-900x565.jpg',
       description: 'Hidden behind narrow alleyways and old buildings are some of Hanois most charming coffee spots.',
       tags: ['Culture', 'Cafe']
     },
@@ -18,7 +18,7 @@ const BlogPage: React.FC = () => {
       title: 'A Deep Dive into the Temple of Literature',
       author: 'Le Thu',
       date: 'Oct 15, 2023',
-      image: 'https://images.unsplash.com/photo-1599708137357-19036c07572d?auto=format&fit=crop&w=800&q=80',
+      image: 'https://cdn.prod.website-files.com/66fab24d6dde4d79b3b50865/686f86dcba8f339e5c73e692_Temple%20of%20Literature%20(1).webp',
       description: 'Exploring the rich history of Vietnams first national university and its beautiful architecture.',
       tags: ['History', 'Education']
     },
@@ -27,7 +27,7 @@ const BlogPage: React.FC = () => {
       title: 'Hanoi Street Food Guide for First-Timers',
       author: 'Alex Wilson',
       date: 'Oct 10, 2023',
-      image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
+      image: 'https://www.pelago.com/img/products/VN-Vietnam/best-price-hanoi-walking-street-food-tour-3-hours-small-group/2f4c1c40-a4ee-48a2-b683-8e739d8f006d_best-price-hanoi-walking-street-food-tour-3-hours-small-group.jpg',
       description: 'From Bun Cha to Banh Mi, here are the must-try dishes and the best places to find them.',
       tags: ['Food', 'Guide']
     }

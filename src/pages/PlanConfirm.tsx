@@ -60,20 +60,18 @@ const PlanConfirm: React.FC = () => {
                     <div className="flex-1 bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 hover-card">
                       <div className="flex justify-between items-start mb-6">
                         <div className="text-left">
-                          <h3 className="text-2xl font-bold text-slate-900 tracking-tight font-cabinet">Ancient Soul Discovery</h3>
-                          <p className="text-hanoi-red font-bold text-sm font-satoshi">Hoan Kiem & Old Quarter Discovery</p>
+                          <h3 className="text-2xl font-bold text-slate-900 tracking-tight font-cabinet">History & Architecture</h3>
+                          <p className="text-hanoi-red font-bold text-sm font-satoshi">From Colonial to Classic</p>
                         </div>
-                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] bg-slate-50 px-3 py-1 rounded-lg">04 Stops</span>
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] bg-slate-50 px-3 py-1 rounded-lg">02 Stops</span>
                       </div>
                       <ul className="space-y-5 font-satoshi text-left">
                         {[
-                          { icon: Coffee, text: '09:00 — Iconic Phở Breakfast at Bát Đàn' },
-                          { icon: Landmark, text: "11:00 — St. Joseph's Cathedral & Art Galleries" },
-                          { icon: Sparkles, text: '14:00 — Thăng Long Water Puppet Masterclass' },
-                          { icon: MapPin, text: '18:30 — Street Food Safari: Beer Street to Bún Chả', highlight: true },
+                          { icon: Landmark, text: '08:30 — Long Bien Bridge: The Eiffel of Hanoi' },
+                          { icon: Landmark, text: "15:00 — St. Joseph's Cathedral: Gothic Heritage" },
                         ].map((item, i) => (
-                          <li key={i} className={`flex items-center gap-4 ${item.highlight ? 'font-bold text-hanoi-red' : 'text-slate-700'}`}>
-                            <item.icon size={20} className={`${item.highlight ? 'text-hanoi-red' : 'text-hanoi-yellow'}`} />
+                          <li key={i} className="flex items-center gap-4 text-slate-700">
+                            <item.icon size={20} className="text-hanoi-yellow" />
                             <span className="font-medium">{item.text}</span>
                           </li>
                         ))}
@@ -84,6 +82,7 @@ const PlanConfirm: React.FC = () => {
 
                 {/* Day 2 */}
                 <div className="relative">
+                  <div className="absolute left-4 top-14 bottom-0 w-0.5 border-l-2 border-dashed border-slate-300"></div>
                   <div className="flex gap-8 relative">
                     <div className="w-10 h-10 rounded-full bg-hanoi-green text-white flex items-center justify-center font-black shrink-0 z-10 shadow-lg font-cabinet">
                       2
@@ -91,24 +90,50 @@ const PlanConfirm: React.FC = () => {
                     <div className="flex-1 bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 hover-card">
                       <div className="flex justify-between items-start mb-6">
                         <div className="text-left">
-                          <h3 className="text-2xl font-bold text-slate-900 tracking-tight font-cabinet">Imperial Heritage Route</h3>
-                          <p className="text-hanoi-green font-bold text-sm font-satoshi">Dynasty Echoes & Colonial Landmarks</p>
+                          <h3 className="text-2xl font-bold text-slate-900 tracking-tight font-cabinet">Grandeur & Tradition</h3>
+                          <p className="text-hanoi-green font-bold text-sm font-satoshi">Art and Sacred Sites</p>
                         </div>
-                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] bg-slate-50 px-3 py-1 rounded-lg">05 Stops</span>
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] bg-slate-50 px-3 py-1 rounded-lg">02 Stops</span>
                       </div>
-                      <ul className="space-y-5 font-satoshi text-left text-slate-700">
-                        <li className="flex items-center gap-4">
-                          <Landmark size={20} className="text-hanoi-yellow" />
-                          <span className="font-medium">08:30 — Ho Chi Minh Mausoleum Complex</span>
-                        </li>
-                        <li className="flex items-center gap-4">
-                          <Sparkles size={20} className="text-hanoi-yellow" />
-                          <span className="font-medium">13:30 — Temple of Literature (Văn Miếu)</span>
-                        </li>
-                        <li className="flex items-center gap-4">
-                          <BusFront size={20} className="text-hanoi-yellow" />
-                          <span className="font-medium">16:00 — Train Street Cinematic Experience</span>
-                        </li>
+                      <ul className="space-y-5 font-satoshi text-left">
+                        {[
+                          { icon: Sparkles, text: '09:00 — Hanoi Opera House: Cultural Gem' },
+                          { icon: Landmark, text: '14:00 — One Pillar Pagoda: Iconic Spirit' },
+                        ].map((item, i) => (
+                          <li key={i} className="flex items-center gap-4 text-slate-700">
+                            <item.icon size={20} className="text-hanoi-yellow" />
+                            <span className="font-medium">{item.text}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Day 3 */}
+                <div className="relative">
+                  <div className="flex gap-8 relative">
+                    <div className="w-10 h-10 rounded-full bg-hanoi-yellow text-slate-900 flex items-center justify-center font-black shrink-0 z-10 shadow-lg font-cabinet">
+                      3
+                    </div>
+                    <div className="flex-1 bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 hover-card">
+                      <div className="flex justify-between items-start mb-6">
+                        <div className="text-left">
+                          <h3 className="text-2xl font-bold text-slate-900 tracking-tight font-cabinet">Markets & Reflections</h3>
+                          <p className="text-hanoi-yellow font-bold text-sm font-satoshi">Local Life and Lake Views</p>
+                        </div>
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] bg-slate-50 px-3 py-1 rounded-lg">02 Stops</span>
+                      </div>
+                      <ul className="space-y-5 font-satoshi text-left">
+                        {[
+                          { icon: MapPin, text: '09:00 — Dong Xuan Market: Local Bustle' },
+                          { icon: Landmark, text: '16:30 — Tran Quoc Pagoda: Sunset Reflection' },
+                        ].map((item, i) => (
+                          <li key={i} className="flex items-center gap-4 text-slate-700">
+                            <item.icon size={20} className="text-hanoi-yellow" />
+                            <span className="font-medium">{item.text}</span>
+                          </li>
+                        ))}
                       </ul>
                     </div>
                   </div>

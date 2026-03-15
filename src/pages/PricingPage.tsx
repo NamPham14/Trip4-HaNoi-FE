@@ -5,31 +5,47 @@ import { Check, Zap, Crown, Rocket, ArrowRight } from 'lucide-react';
 const PricingPage: React.FC = () => {
   const plans = [
     {
-      name: 'Free',
-      price: '$0',
-      description: 'Perfect for a quick look around the city.',
-      features: ['3 AI Itineraries per month', 'Basic point-of-interest details', 'Standard route mapping', 'Community support'],
+      name: 'Free Version',
+      price: '0 VND',
+      description: 'Access basic features and explore popular attractions.',
+      features: [
+        'Search tourist attractions & restaurants',
+        'Maximum 3 itineraries per month',
+        'Popular location suggestions',
+        'Light advertisements'
+      ],
       buttonText: 'Current Plan',
       premium: false,
       icon: Rocket
     },
     {
-      name: 'Explorer',
-      price: '$9.99',
+      name: 'Pro Package',
+      price: '99,000 VND',
       period: '/month',
-      description: 'Best for tourists wanting a seamless experience.',
-      features: ['Unlimited AI Generation', 'Hidden Gems suggestions', 'Smart route optimization', 'Offline itinerary access', 'Priority AI processing'],
+      description: 'Advanced AI tools for a seamless travel experience.',
+      features: [
+        'Unlimited AI-generated itineraries',
+        'Smart route optimization (Save costs)',
+        'Hidden Gems recommendations',
+        'Export to PDF & offline access'
+      ],
       buttonText: 'Upgrade to Pro',
       premium: true,
       icon: Zap
     },
     {
-      name: 'Local Guide',
-      price: '$19.99',
-      period: '/year',
-      description: 'For those who love Hanoi and want more.',
-      features: ['Everything in Explorer', 'Exclusive partner discounts', '24/7 Local AI Assistant', 'Early access to new features', 'No ads'],
-      buttonText: 'Go Elite',
+      name: 'Premium Package',
+      price: 'Coming Soon',
+      period: '',
+      description: 'Complete, high-convenience premium solution.',
+      features: [
+        'Everything in Pro Package',
+        'Exclusive partner discounts',
+        '24/7 1-on-1 expert support',
+        'Full booking & planning support',
+        'Exclusive travel experiences'
+      ],
+      buttonText: 'Join Waitlist',
       premium: false,
       icon: Crown
     }
@@ -39,9 +55,9 @@ const PricingPage: React.FC = () => {
     <Layout>
       <main className="flex-grow container mx-auto px-6 py-16 max-w-6xl text-center">
         <div className="mb-16">
-          <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4">Choose Your Journey</h1>
-          <p className="text-lg text-slate-500 max-w-2xl mx-auto">
-            Unlock the full potential of AI-driven travel planning and discover Hanoi like a local.
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4">Product Pricing</h1>
+          <p className="text-lg text-slate-500 max-w-3xl mx-auto">
+            Trip4Hanoi uses a freemium pricing model, allowing users to access basic features for free while offering premium services for users who want a more advanced travel planning experience.
           </p>
         </div>
 

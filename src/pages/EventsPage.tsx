@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../components/Layout';
-import { Calendar, MapPin, Clock, ArrowRight, Tag } from 'lucide-react';
+import { Calendar, MapPin, Clock, ArrowRight } from 'lucide-react';
 
 const EventsPage: React.FC = () => {
   const events = [
@@ -11,7 +11,7 @@ const EventsPage: React.FC = () => {
       date: 'Oct 25, 2023',
       time: '19:30 - 21:30',
       category: 'Culture',
-      image: 'https://images.unsplash.com/photo-1559592443-7f87a79f6386?auto=format&fit=crop&w=800&q=80',
+      image: 'https://www.shoreexcursions.asia/wp-content/uploads/2017/09/Hanoi-Opera-House-1.jpg',
       description: 'A grand performance featuring traditional Vietnamese music and international classics.'
     },
     {
@@ -21,7 +21,7 @@ const EventsPage: React.FC = () => {
       date: 'Every Fri - Sun',
       time: '18:00 - 23:00',
       category: 'Shopping',
-      image: 'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?auto=format&fit=crop&w=800&q=80',
+      image: 'http://vietnamtravelers.com/wp-content/uploads/hanoi-night-market-food.jpg',
       description: 'Experience the bustling night life, street food, and local handicrafts in the heart of Hanoi.'
     },
     {
@@ -31,7 +31,7 @@ const EventsPage: React.FC = () => {
       date: 'Every Sat - Sun',
       time: 'All Day',
       category: 'Local Life',
-      image: 'https://images.unsplash.com/photo-1509030464150-1b9b55ad4d2e?auto=format&fit=crop&w=800&q=80',
+      image: 'https://lasinfoniavietnam.com/wp-content/uploads/2023/04/pho-di-bo-13.gif',
       description: 'The streets around the lake are closed to vehicles, becoming a hub for games, music, and art.'
     }
   ];
