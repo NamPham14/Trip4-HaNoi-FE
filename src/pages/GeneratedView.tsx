@@ -1,88 +1,32 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import { ArrowRight, Banknote, Map, Share2, Sparkles, Star } from 'lucide-react';
+import type { ItineraryResponse } from '../services/api';
 
+interface GeneratedViewProps {
+  data: ItineraryResponse | null;
+}
 
-const GeneratedView: React.FC = () => {
-  const itinerary = [
-    {
-      day: 1,
-      title: 'History & Architecture',
-      subtitle: 'From Colonial to Classic',
-      stops: [
-        {
-          time: '08:30 AM - 10:30 AM',
-          name: 'Long Bien Bridge',
-          description: 'The historic cantilever bridge across the Red River, designed by Gustave Eiffel and a symbol of Hanoi resilience.',
-          image: 'https://www.hanoilocaltour.com/wp-content/uploads/Long-Bien-Bridge.jpg',
-          tags: ['Historic', 'Architecture'],
-          rating: '4.6'
-        },
-        {
-          time: '03:00 PM - 04:30 PM',
-          name: "St. Joseph's Cathedral",
-          description: 'A late 19th-century Gothic Revival church, serving as the cathedral of the Roman Catholic Archdiocese of Hanoi.',
-          image: 'https://vietnamsensetravel.com/view/at_hanoi-church-prepares-for-christmas-celebration_200c8b71a1244fe285f8230c7b9a44c4.jpg',
-          tags: ['Gothic', 'Religious'],
-          rating: '4.8'
-        }
-      ]
-    },
-    {
-      day: 2,
-      title: 'Grandeur & Tradition',
-      subtitle: 'Art and Sacred Sites',
-      stops: [
-        {
-          time: '09:00 AM - 11:00 AM',
-          name: 'Hanoi Opera House',
-          description: 'An iconic yellow colonial building inspired by the Palais Garnier, the heart of classical music and arts.',
-          image: 'https://silkpathhotel.com/wp-content/uploads/2023/12/silkpath-hanoi-things-to-do-hanoi_opera_house.jpg',
-          tags: ['Arts', 'French Colonial'],
-          rating: '4.7'
-        },
-        {
-          time: '02:00 PM - 03:30 PM',
-          name: 'One Pillar Pagoda',
-          description: 'A historic Buddhist temple in Hanoi, the capital of Vietnam. It is regarded alongside the Perfume Temple, as one of Vietnam\'s two most iconic temples.',
-          image: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/61/62/de/chua-m-t-c-t-one-pillar.jpg?w=1000&h=-1&s=1',
-          tags: ['Spiritual', 'Iconic'],
-          rating: '4.6'
-        }
-      ]
-    },
-    {
-      day: 3,
-      title: 'Markets & Reflections',
-      subtitle: 'Local Life and Lake Views',
-      stops: [
-        {
-          time: '09:00 AM - 11:30 AM',
-          name: 'Dong Xuan Market',
-          description: "Hanoi's largest indoor market, offering everything from fresh produce to clothing and local souvenirs.",
-          image: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/01/4c/e3/99/caption.jpg?w=700&h=-1&s=1',
-          tags: ['Market', 'Shopping'],
-          rating: '4.5'
-        },
-        {
-          time: '04:30 PM - 06:00 PM',
-          name: 'Tran Quoc Pagoda',
-          description: 'The oldest Buddhist temple in Hanoi, located on a small island near the southeastern shore of West Lake.',
-          image: 'https://file3.qdnd.vn/data/images/3/2019/03/29/huuduong_ta/01%207.jpg?dpi=150&quality=100&w=500',
-          tags: ['Oldest', 'Pagoda'],
-          rating: '4.8'
-        }
-      ]
-    }
-  ];
+const GeneratedView: React.FC<GeneratedViewProps> = ({ data }) => {
+  if (!data) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-6 py-24 text-center">
+          <h2 className="text-2xl font-bold mb-4">No plan found!</h2>
+          <p className="mb-8 text-slate-500">Please go back to the planner and generate a new plan.</p>
+          <a href="/planner" className="px-8 py-3 bg-hanoi-red text-white rounded-2xl font-bold shadow-lg">Go to Planner</a>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
       <main className="container mx-auto px-6 md:px-12 py-12 text-left">
         <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-2xl">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 font-cabinet">Your Hanoi Discovery Plan</h1>
-            <p className="text-lg text-slate-600 font-satoshi">An AI-crafted 3-day journey blending imperial history with the vibrant soul of modern street life. / Lịch trình 3 ngày tại Hà Nội.</p>
+            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 font-cabinet">{data.title || 'Your Hanoi Discovery Plan'}</h1>
+            <p className="text-lg text-slate-600 font-satoshi">An AI-crafted {data.days}-day journey blending imperial history with the vibrant soul of modern street life.</p>
           </div>
           <div className="flex gap-4">
             <button className="flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 rounded-2xl font-bold text-slate-600 hover:bg-slate-50 transition-all">
@@ -105,17 +49,17 @@ const GeneratedView: React.FC = () => {
                       <Map size={24} />
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-slate-400 uppercase tracking-tighter">Total Distance</p>
-                      <p className="text-lg font-bold text-slate-900">18.4 km</p>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-tighter">Total Days</p>
+                      <p className="text-lg font-bold text-slate-900">{data.days} Days</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4 p-4 bg-soft-beige rounded-2xl">
-                    <div className="w-12 h-12 bg-hanoi-green rounded-xl flex items-center justify-center text-white text-2xl">
+<div className="w-12 h-12 bg-hanoi-green rounded-xl flex items-center justify-center text-white text-2xl">
                       <Banknote size={24} />
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-slate-400 uppercase tracking-tighter">Estimated Cost</p>
-                      <p className="text-lg font-bold text-slate-900">1.2M - 2M VND</p>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-tighter">Budget Limit</p>
+                      <p className="text-lg font-bold text-slate-900">{data.budget?.toLocaleString()} VND</p>
                     </div>
                   </div>
                 </div>
@@ -124,7 +68,7 @@ const GeneratedView: React.FC = () => {
               <div className="bg-slate-900 p-8 rounded-[2rem] text-white overflow-hidden relative">
                 <div className="relative z-10 text-left">
                   <h3 className="text-xl font-bold mb-2 font-cabinet">AI Insight</h3>
-                  <p className="text-slate-400 text-sm leading-relaxed mb-4">"We've optimized your route to avoid the 5PM rush hour traffic around the Old Quarter. Best to stay near West Lake for the sunset."</p>
+                  <p className="text-slate-400 text-sm leading-relaxed mb-4">"We've optimized your route for {data.numberOfPeople} people. Best to follow the suggested sessions (Morning/Afternoon/Evening) for the best experience."</p>
                   <div className="flex items-center gap-2 text-hanoi-yellow font-bold text-sm">
                     <Sparkles size={16} /> Optimized by Trip4Hanoi
                   </div>
@@ -134,39 +78,46 @@ const GeneratedView: React.FC = () => {
           </aside>
 
           <div className="lg:col-span-8 space-y-12">
-            {itinerary.map((dayPlan) => (
-              <div key={dayPlan.day} className="relative text-left">
+            {data.itineraryDays.map((day) => (
+              <div key={day.dayNumber} className="relative text-left">
                 <div className="flex items-center gap-4 mb-8">
                   <div className="w-14 h-14 bg-hanoi-red text-white rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg shadow-hanoi-red/20">
-                    {dayPlan.day}
+                    {day.dayNumber}
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-slate-900 font-cabinet">Day {dayPlan.day}: {dayPlan.title}</h2>
-                    <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">{dayPlan.subtitle}</p>
+                    <h2 className="text-2xl font-bold text-slate-900 font-cabinet">Day {day.dayNumber}</h2>
+                    <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">Explore the heart of the city</p>
                   </div>
                 </div>
 
                 <div className="ml-7 border-l-2 border-dashed border-hanoi-red/30 pl-10 space-y-10">
-                  {dayPlan.stops.map((stop, idx) => (
-                    <div key={idx} className="relative group">
+                  {day.places.sort((a, b) => a.orderIndex - b.orderIndex).map((stop) => (
+                    <div key={stop.id} className="relative group">
                       <div className="absolute -left-[51px] top-0 w-5 h-5 bg-white border-4 border-hanoi-red rounded-full z-10"></div>
                       <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 hover-card transition-all">
                         <div className="flex flex-col md:flex-row gap-6">
-                          <img src={stop.image} className="w-full md:w-40 h-40 object-cover rounded-2xl" alt={stop.name} />
-                          <div className="flex-grow">
+                          <img 
+                            src={`https://images.unsplash.com/photo-${1500000000000 + (stop.placeId % 1000)}?auto=format&fit=crop&q=80&w=400`} 
+                            className="w-full md:w-40 h-40 object-cover rounded-2xl" 
+                            alt={stop.placeName} 
+                          />
+<div className="flex-grow">
                             <div className="flex justify-between items-start mb-2">
-                              <span className="text-xs font-bold text-hanoi-green bg-hanoi-green/10 px-3 py-1 rounded-full uppercase tracking-tighter">{stop.time}</span>
+                              <span className="text-xs font-bold text-hanoi-green bg-hanoi-green/10 px-3 py-1 rounded-full uppercase tracking-tighter">
+                                {stop.session}
+                              </span>
                               <div className="flex gap-1 text-hanoi-yellow items-center">
                                 <Star size={14} fill="currentColor" />
-                                <span className="text-slate-900 text-xs font-bold">{stop.rating}</span>
+                                <span className="text-slate-900 text-xs font-bold">4.8</span>
                               </div>
                             </div>
-                            <h4 className="text-xl font-bold text-slate-900 mb-2 font-cabinet">{stop.name}</h4>
-                            <p className="text-slate-500 text-sm mb-4 line-clamp-2">{stop.description}</p>
+                            <h4 className="text-xl font-bold text-slate-900 mb-2 font-cabinet">{stop.placeName}</h4>
+                            <p className="text-slate-500 text-sm mb-4 line-clamp-2">
+                              Estimated cost: {stop.estimatedCost?.toLocaleString()} VND. Enjoy your time at this wonderful location in Hanoi!
+                            </p>
                             <div className="flex flex-wrap gap-2">
-                              {stop.tags.map(tag => (
-                                <span key={tag} className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-1 rounded-md uppercase">{tag}</span>
-                              ))}
+                              <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-1 rounded-md uppercase">Order: {stop.orderIndex}</span>
+                              <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-1 rounded-md uppercase">Hanoi</span>
                             </div>
                           </div>
                         </div>

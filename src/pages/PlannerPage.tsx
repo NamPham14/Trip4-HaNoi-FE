@@ -1,18 +1,44 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from 'react';
-import Layout from '../components/Layout';
-import { Check, Banknote, Wallet, Gem, Calendar, Heart, ArrowRight, Sparkles, User, Users, Home, Plus, Minus } from 'lucide-react';
 
-const PlannerPage: React.FC = () => {
+import React, { useState, useEffect } from 'react';
+import Layout from '../components/Layout';
+import { Check, Banknote, Wallet, Gem, Calendar, Heart, ArrowRight, Sparkles, User, Users, Home, Plus, Minus, Loader2 } from 'lucide-react';
+import { createItinerary, getAllCategories } from '../services/api';
+import type { ItineraryResponse, CategoryResponse } from '../services/api';
+
+interface PlannerPageProps {
+  onPlanGenerated: (data: ItineraryResponse) => void;
+}
+
+const PlannerPage: React.FC<PlannerPageProps> = ({ onPlanGenerated }) => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [categories, setCategories] = useState<CategoryResponse[]>([]);
+  const [isCategoriesLoading, setIsCategoriesLoading] = useState(true);
   const totalSteps = 5;
   const [formData, setFormData] = useState({
-    duration: '4h',
+    duration: '1d',
+
     interests: [] as string[],
     budget: 'Moderate',
     peopleCount: 1,
     travelType: 'Solo'
   });
+
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const data = await getAllCategories();
+        setCategories(data);
+      } catch (error) {
+        console.error('Failed to fetch categories:', error);
+      } finally {
+        setIsCategoriesLoading(false);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   const handleNext = () => {
     if (currentStep < totalSteps) setCurrentStep(currentStep + 1);
@@ -39,6 +65,39 @@ const PlannerPage: React.FC = () => {
     setFormData(prev => ({ ...prev, peopleCount: Math.max(1, prev.peopleCount + amount) }));
   };
 
+
+  const handleGenerate = async () => {
+    setIsLoading(true);
+    try {
+      // Map duration to number of days
+      const days = formData.duration === '4h' ? 1 : parseInt(formData.duration.replace('d', ''));
+      
+      // Map budget labels to numbers
+      const budgetMap: Record<string, number> = {
+        'Budget': 500000,
+        'Moderate': 1500000,
+        'Luxury': 5000000
+      };
+
+      const requestData = {
+        title: `Trip to Hanoi for ${formData.peopleCount} ${formData.peopleCount > 1 ? 'people' : 'person'}`,
+        budget: budgetMap[formData.budget],
+        days: days,
+        numberOfPeople: formData.peopleCount,
+        categoryNames: formData.interests
+      };
+
+      const result = await createItinerary(requestData);
+      onPlanGenerated(result);
+    } catch (error) {
+      console.error('Failed to generate plan:', error);
+      alert('Có lỗi xảy ra khi tạo lịch trình. Vui lòng thử lại sau!');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
   const travelTypes = [
     { id: 'Solo', label: 'Solo', icon: User, defaultCount: 1 },
     { id: 'Couple', label: 'Couple', icon: Heart, defaultCount: 2 },
@@ -51,6 +110,25 @@ const PlannerPage: React.FC = () => {
   return (
     <Layout>
       <main className="flex-grow container mx-auto px-6 py-12 max-w-4xl text-left">
+
+        {/* AI Suggestion Banner */}
+        <div className="mb-8 bg-gradient-to-r from-slate-900 to-slate-800 rounded-3xl p-6 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-hanoi-red/10 rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl group-hover:bg-hanoi-red/20 transition-all duration-700"></div>
+          <div className="relative z-10 flex items-center gap-4">
+            <div className="w-14 h-14 bg-white/10 backdrop-blur-xl rounded-2xl flex items-center justify-center text-hanoi-yellow animate-pulse-slow">
+              <Sparkles size={28} />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold font-cabinet">Want a Custom AI Itinerary?</h3>
+              <p className="text-slate-400 text-sm font-medium">Chat with our AI to build your dream Hanoi trip in seconds.</p>
+            </div>
+          </div>
+          <a href="/ai-planner" className="relative z-10 px-8 py-3 bg-hanoi-red text-white rounded-xl font-bold hover:bg-hanoi-red-dark transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
+            Try AI Chat <ArrowRight size={18} />
+          </a>
+        </div>
+
+
         <div className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-sm border border-slate-100">
           <div className="mb-12">
             <div className="flex justify-between items-center mb-4">
@@ -135,28 +213,36 @@ const PlannerPage: React.FC = () => {
                   <h2 className="text-3xl font-bold text-slate-900 mb-2">What Interests You?</h2>
                   <p className="text-slate-500">Select all that apply to personalize your itinerary. <br className="hidden md:block" /> Chọn các chủ đề bạn quan tâm.</p>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                  {['Street Food', 'History', 'Coffee Culture', 'Art & Design', 'Local Life', 'Nightlife'].map((interest) => (
-                    <div key={interest} className="relative">
-                      <input 
-                        type="checkbox" 
-                        id={`int-${interest}`} 
-                        className="hidden" 
-                        checked={formData.interests.includes(interest)}
-                        onChange={() => toggleInterest(interest)}
-                      />
-                      <label 
-                        htmlFor={`int-${interest}`} 
-                        className={`flex items-center gap-4 p-5 border-2 rounded-2xl cursor-pointer transition-all ${formData.interests.includes(interest) ? 'border-hanoi-red bg-hanoi-red/5 text-hanoi-red' : 'border-slate-100 hover:border-hanoi-red/30'}`}
-                      >
-                        <div className={`w-6 h-6 rounded-md border flex items-center justify-center ${formData.interests.includes(interest) ? 'bg-hanoi-red border-hanoi-red text-white' : 'border-slate-300'}`}>
-                          {formData.interests.includes(interest) && <Check size={14} />}
-                        </div>
-                        <span className="font-bold text-slate-700">{interest}</span>
-                      </label>
-                    </div>
-                  ))}
-                </div>
+
+                {isCategoriesLoading ? (
+                  <div className="flex justify-center items-center py-10">
+                    <Loader2 size={40} className="animate-spin text-hanoi-red" />
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 gap-4">
+                    {categories.map((cat) => (
+                      <div key={cat.id} className="relative">
+                        <input 
+                          type="checkbox" 
+                          id={`int-${cat.id}`} 
+                          className="hidden" 
+                          checked={formData.interests.includes(cat.name)}
+                          onChange={() => toggleInterest(cat.name)}
+                        />
+                        <label 
+                          htmlFor={`int-${cat.id}`} 
+                          className={`flex items-center gap-4 p-5 border-2 rounded-2xl cursor-pointer transition-all ${formData.interests.includes(cat.name) ? 'border-hanoi-red bg-hanoi-red/5 text-hanoi-red' : 'border-slate-100 hover:border-hanoi-red/30'}`}
+                        >
+                          <div className={`w-6 h-6 rounded-md border flex items-center justify-center ${formData.interests.includes(cat.name) ? 'bg-hanoi-red border-hanoi-red text-white' : 'border-slate-300'}`}>
+                            {formData.interests.includes(cat.name) && <Check size={14} />}
+                          </div>
+                          <span className="font-bold text-slate-700">{cat.name}</span>
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
               </div>
             )}
 
@@ -254,7 +340,9 @@ const PlannerPage: React.FC = () => {
             <div className="mt-12 flex items-center justify-between gap-4">
               <button 
                 onClick={handlePrev}
-                className={`px-8 py-4 rounded-2xl font-bold border-2 border-slate-100 text-slate-500 hover:border-hanoi-red hover:text-hanoi-red transition-all ${currentStep === 1 ? 'invisible' : ''}`}
+
+                disabled={isLoading}
+                className={`px-8 py-4 rounded-2xl font-bold border-2 border-slate-100 text-slate-500 hover:border-hanoi-red hover:text-hanoi-red transition-all ${currentStep === 1 ? 'invisible' : ''} ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
                 Back
               </button>
@@ -267,12 +355,19 @@ const PlannerPage: React.FC = () => {
                   Continue <ArrowRight size={20} />
                 </button>
               ) : (
-                <a 
-                  href="/generated"
-                  className="px-10 py-4 bg-hanoi-red text-white rounded-2xl font-bold hover:bg-hanoi-red-dark transition-all shadow-xl flex items-center gap-2"
+
+                <button 
+                  onClick={handleGenerate}
+                  disabled={isLoading}
+                  className="px-10 py-4 bg-hanoi-red text-white rounded-2xl font-bold hover:bg-hanoi-red-dark transition-all shadow-xl flex items-center gap-2 disabled:bg-slate-400"
                 >
-                  Generate Plan <Sparkles size={20} />
-                </a>
+                  {isLoading ? (
+                    <>Processing... <Loader2 size={20} className="animate-spin" /></>
+                  ) : (
+                    <>Generate Plan <Sparkles size={20} /></>
+                  )}
+                </button>
+
               )}
             </div>
           </form>

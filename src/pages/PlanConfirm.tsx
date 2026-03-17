@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../components/Layout';
-import { Calendar, Users, MapPin, Edit3, Coffee, Landmark, Sparkles, TicketPercent, Utensils, BusFront, Zap, Share2, Bookmark, Lightbulb } from 'lucide-react';
+import { Calendar, Users, MapPin, Edit3, Landmark, Sparkles, TicketPercent, Utensils, BusFront, Zap, Share2, Bookmark, Lightbulb } from 'lucide-react';
 
 const PlanConfirm: React.FC = () => {
   return (
@@ -60,6 +60,7 @@ const PlanConfirm: React.FC = () => {
                     <div className="flex-1 bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 hover-card">
                       <div className="flex justify-between items-start mb-6">
                         <div className="text-left">
+
                           <h3 className="text-2xl font-bold text-slate-900 tracking-tight font-cabinet">History & Architecture</h3>
                           <p className="text-hanoi-red font-bold text-sm font-satoshi">From Colonial to Classic</p>
                         </div>
@@ -72,6 +73,7 @@ const PlanConfirm: React.FC = () => {
                         ].map((item, i) => (
                           <li key={i} className="flex items-center gap-4 text-slate-700">
                             <item.icon size={20} className="text-hanoi-yellow" />
+
                             <span className="font-medium">{item.text}</span>
                           </li>
                         ))}
@@ -82,7 +84,9 @@ const PlanConfirm: React.FC = () => {
 
                 {/* Day 2 */}
                 <div className="relative">
+
                   <div className="absolute left-4 top-14 bottom-0 w-0.5 border-l-2 border-dashed border-slate-300"></div>
+
                   <div className="flex gap-8 relative">
                     <div className="w-10 h-10 rounded-full bg-hanoi-green text-white flex items-center justify-center font-black shrink-0 z-10 shadow-lg font-cabinet">
                       2
@@ -90,6 +94,7 @@ const PlanConfirm: React.FC = () => {
                     <div className="flex-1 bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 hover-card">
                       <div className="flex justify-between items-start mb-6">
                         <div className="text-left">
+
                           <h3 className="text-2xl font-bold text-slate-900 tracking-tight font-cabinet">Grandeur & Tradition</h3>
                           <p className="text-hanoi-green font-bold text-sm font-satoshi">Art and Sacred Sites</p>
                         </div>
@@ -134,6 +139,7 @@ const PlanConfirm: React.FC = () => {
                             <span className="font-medium">{item.text}</span>
                           </li>
                         ))}
+
                       </ul>
                     </div>
                   </div>

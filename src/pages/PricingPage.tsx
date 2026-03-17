@@ -5,6 +5,7 @@ import { Check, Zap, Crown, Rocket, ArrowRight } from 'lucide-react';
 const PricingPage: React.FC = () => {
   const plans = [
     {
+
       name: 'Free Version',
       price: '0 VND',
       description: 'Access basic features and explore popular attractions.',
@@ -19,6 +20,7 @@ const PricingPage: React.FC = () => {
       icon: Rocket
     },
     {
+
       name: 'Pro Package',
       price: '99,000 VND',
       period: '/month',

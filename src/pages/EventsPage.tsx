@@ -12,6 +12,7 @@ const EventsPage: React.FC = () => {
       time: '19:30 - 21:30',
       category: 'Culture',
       image: 'https://www.shoreexcursions.asia/wp-content/uploads/2017/09/Hanoi-Opera-House-1.jpg',
+
       description: 'A grand performance featuring traditional Vietnamese music and international classics.'
     },
     {
