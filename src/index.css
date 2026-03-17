@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@theme {
+  --color-hanoi-red: #C62828;
+  --color-hanoi-red-dark: #A52323;
+  --color-hanoi-yellow: #FFB300;
+  --color-hanoi-yellow-dark: #EAA400;
+  --color-hanoi-green: #2E7D32;
+  --color-soft-beige: #F8F6F3;
+  
+  --font-satoshi: 'Satoshi', sans-serif;
+  --font-cabinet: 'Cabinet Grotesk', sans-serif;
+}
+
+:root {
+  font-family: var(--font-satoshi);
+  line-height: 1.5;
+  font-weight: 400;
+  background-color: var(--color-soft-beige);
+  color: #0f172a; /* slate-900 */
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-cabinet);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+.hover-card {
+  transition: all 0.3s ease-out;
+}
+
+.hover-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+iconify-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+}
