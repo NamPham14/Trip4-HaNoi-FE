@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef,  } from 'react';
 import Layout from '../components/Layout';
-import { Send, Sparkles, Loader2, Calendar, MapPin, Banknote, Clock, ChevronRight, Zap, Info } from 'lucide-react';
+import { Send, Sparkles , Banknote, Clock, ChevronRight, Zap, Info } from 'lucide-react';
 import { chatWithAI } from '../services/api';
 import type { ChatResponse } from '../services/api';
 
